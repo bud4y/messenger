@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <html>
+    <head>
+        <meta charset="UTF-8"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    </head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-info">
+    <a class="navbar-brand text-white" href="/home">Home</a>
+    <div class="collapse navbar-collapse" id="Menu">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link text-white" href="/messages">Messages</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white" href="/create">Create Message</a>
+            </li>
+        </ul>
+    </div>
+    <form data-th-action="@{/logout}" method="POST">
+        <input type="submit" value="Logout"/>
+    </form>
+</nav>
+
+<p></p>
+<div class="container">
+    <div class="card">
+        <div class="card-body">
+<!--            <p class="card-text" data-th-text="${message.id}"></p>-->
+            <h4 class="card-title" data-th-text="${message.author}"></h4>
+            <p class="card-text" data-th-text="${message.text}"></p>
+<p class="card-text" data-th-text="${message.dateTime}"></p>
+        </div>
+    </div>
+</div>
+</body>
+</html>
