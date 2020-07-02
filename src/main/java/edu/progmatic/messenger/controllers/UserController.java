@@ -1,8 +1,10 @@
 package edu.progmatic.messenger.controllers;
 
 import edu.progmatic.messenger.modell.RegDto;
+import edu.progmatic.messenger.modell.User;
+import edu.progmatic.messenger.services.MyUserDetailsManager;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.stereotype.Controller;
@@ -14,11 +16,11 @@ import javax.validation.Valid;
 
 @Controller
 public class UserController {
-    private UserDetailsManager userDetailsService;
+    private MyUserDetailsManager userDetailsService;
 
     @Autowired
-    public UserController(UserDetailsService userDetailsService) {
-        this.userDetailsService = (UserDetailsManager) userDetailsService;
+    public UserController(MyUserDetailsManager userDetailsService) {
+        this.userDetailsService =  userDetailsService;
     }
 
     @GetMapping("/login")
@@ -33,13 +35,12 @@ public class UserController {
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public String registerUsers(@Valid @ModelAttribute("registration") RegDto registration, BindingResult bindingResult) {
+    public String registerUsers( @ModelAttribute("registration") RegDto registration, BindingResult bindingResult) {
         if (bindingResult.hasErrors() || registrationHasErrors(registration, bindingResult)) {
             return "register";
         }
 
-        userDetailsService.createUser(User.withUsername(registration.getUsername()).
-                password(registration.getPassword()).roles("USER").build());
+        userDetailsService.createUser(new User(registration));
 
         return "redirect:/login";
     }

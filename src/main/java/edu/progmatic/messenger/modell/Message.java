@@ -14,9 +14,8 @@ import java.time.LocalDateTime;
 public class Message implements Serializable {
 
 
-    private static Long maxId = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     public Long id;
 
     @NotNull
@@ -31,13 +30,21 @@ public class Message implements Serializable {
     public LocalDateTime dateTime;
     boolean isDeleted;
 
-    public Message(String text, String author, LocalDateTime dateTime) {
-        this.id = maxId++;
+
+    @ManyToOne
+    private Topic messageTopic;
+
+
+    public Message(String text, String author, LocalDateTime dateTime, boolean isDeleted, Topic messageTopic) {
         this.text = text;
         this.author = author;
         this.dateTime = dateTime;
+        this.isDeleted = isDeleted;
+        this.messageTopic = messageTopic;
     }
 
+    public Message() {
+    }
 
     public boolean isDeleted() {
         return isDeleted;
@@ -47,11 +54,19 @@ public class Message implements Serializable {
         isDeleted = deleted;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public Topic getMessageTopic() {
+        return messageTopic;
+    }
+
+    public void setMessageTopic(Topic messageTopic) {
+        this.messageTopic = messageTopic;
+    }
+
+    public void setId(Long id) {
         this.id = id;
     }
 

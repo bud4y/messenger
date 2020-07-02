@@ -25,12 +25,16 @@
             <li class="nav-item">
                 <a class="nav-link text-white" href="/create">Create Message</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link text-white" href="/newTopic">Create Topic</a>
+            </li>
         </ul>
     </div>
     <form data-th-action="@{/logout}" method="POST">
         <input type="submit" value="Logout"/>
     </form>
 </nav>
+
 <p></p>
 <div class="container">
     <h2>Üzenetek</h2>
@@ -70,6 +74,7 @@
             <td>Feladó</td>
             <td>Üzenet</td>
             <td>Dátum</td>
+            <td>Topic</td>
             <td data-sec-authorize="hasRole('ADMIN')">Deleted</td>
             <td data-sec-authorize="hasRole('ADMIN')"></td>
         </tr>
@@ -80,8 +85,13 @@
             <td data-th-text="${message.author}"></td>
             <td data-th-text="${{message.text}}"></td>
             <td data-th-text="${{message.dateTime}}"></td>
+            <td data-th-text="${message.messageTopic.topicName}"></td>
+
             <td data-sec-authorize="hasRole('ADMIN')" data-th-text="${message.deleted}"></td>
-            <td data-sec-authorize="hasRole('ADMIN')"><form data-th-action="@{'/messages/delete/'+${message.id}}" method="post"><input type="submit" value="Delete"/></form></td>
+            <td data-sec-authorize="hasRole('ADMIN')">
+                <form data-th-action="@{'/messages/delete/'+${message.id}}" method="post"><input type="submit" value="Delete"/>
+                </form>
+            </td>
             <td><a data-th-href="@{/message/{id}(id=${message.id})}">Részletek</a></td>
         </tr>
     </table>

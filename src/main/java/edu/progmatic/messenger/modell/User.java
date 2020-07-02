@@ -1,44 +1,46 @@
 package edu.progmatic.messenger.modell;
 
+import edu.progmatic.messenger.security.Authority;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import javax.management.relation.Role;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@Table(name = "user")
 public class User implements UserDetails {
 
-
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
     @NotBlank
     private String username;
     @NotBlank
     private String password;
-    @NotBlank
+
     private String email;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthDate;
+    @ManyToMany
+    private Set<Authority> authorities;
 
-
-
-    public User(String username, String password, String email, LocalDate birthDate){
-        this.username = username;
-        this.password = password;
-        this.email = email;
-        this.birthDate = birthDate;
+    public User(RegDto regDto) {
+        this.username = regDto.getUsername();
+        this.password = regDto.getPassword();
+        this.email = regDto.getEmail();
+        this.birthDate = regDto.getBirthday();
     }
 
     public User() {
+
     }
+
 
     public Long getId() {
         return id;
@@ -76,9 +78,18 @@ public class User implements UserDetails {
         this.username = username;
     }
 
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
+    }
+
+    public void setAuthorities(Set<Authority> authorities) {
+        this.authorities = authorities;
+    }
+
+    public void addAuthority(Authority authority){
+        authorities.add(authority);
     }
 
     public String getPassword() {
@@ -103,5 +114,8 @@ public class User implements UserDetails {
 
     public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
+    }
+
+    public void setAuthorities(Collection<? extends GrantedAuthority> authorities) {
     }
 }
