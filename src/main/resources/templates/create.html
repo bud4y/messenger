@@ -1,11 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
+<style>
+p.ex2 {
+  margin: 35px;
+}
+
+<!--* {-->
+<!--  box-sizing: border-box;-->
+<!--}-->
+
+<!--body {-->
+<!--  font: 16px Arial;-->
+<!--}-->
+
+<!--/*the container must be positioned relative:*/-->
+<!--.autocomplete {-->
+<!-- position: absolute;-->
+<!--  left: 0;-->
+<!--  top: 100px;-->
+
+<!--display: inline-block;-->
+<!--}-->
+
+<!--&lt;!&ndash;input {&ndash;&gt;-->
+<!--&lt;!&ndash;  border: 1px solid transparent;&ndash;&gt;-->
+<!--&lt;!&ndash;  background-color: #f1f1f1;&ndash;&gt;-->
+<!--&lt;!&ndash;  padding: 10px;&ndash;&gt;-->
+<!--&lt;!&ndash;  font-size: 16px;&ndash;&gt;-->
+<!--&lt;!&ndash;}&ndash;&gt;-->
+
+<!--&lt;!&ndash;input[type=text] {&ndash;&gt;-->
+<!--&lt;!&ndash;  background-color: #f1f1f1;&ndash;&gt;-->
+<!--&lt;!&ndash;  width: 100%;&ndash;&gt;-->
+<!--&lt;!&ndash;}&ndash;&gt;-->
+
+<!--&lt;!&ndash;input[type=submit] {&ndash;&gt;-->
+<!--&lt;!&ndash;  background-color: DodgerBlue;&ndash;&gt;-->
+<!--&lt;!&ndash;  color: #fff;&ndash;&gt;-->
+<!--&lt;!&ndash;  cursor: pointer;&ndash;&gt;-->
+<!--&lt;!&ndash;}&ndash;&gt;-->
+
+<!--&lt;!&ndash;.autocomplete-items {&ndash;&gt;-->
+<!--&lt;!&ndash;  position: absolute;&ndash;&gt;-->
+<!--&lt;!&ndash;  border: 1px solid #d4d4d4;&ndash;&gt;-->
+<!--&lt;!&ndash;  border-bottom: none;&ndash;&gt;-->
+<!--&lt;!&ndash;  border-top: none;&ndash;&gt;-->
+<!--&lt;!&ndash;  z-index: 99;&ndash;&gt;-->
+<!--&lt;!&ndash;  /*position the autocomplete items to be the same width as the container:*/&ndash;&gt;-->
+<!--&lt;!&ndash;  top: 0;&ndash;&gt;-->
+<!--&lt;!&ndash;  left: 0;&ndash;&gt;-->
+<!--&lt;!&ndash;  right: 0;&ndash;&gt;-->
+<!--&lt;!&ndash;}&ndash;&gt;-->
+
+<!--&lt;!&ndash;.autocomplete-items div {&ndash;&gt;-->
+<!--&lt;!&ndash;  padding: 10px;&ndash;&gt;-->
+<!--&lt;!&ndash;  cursor: pointer;&ndash;&gt;-->
+<!--&lt;!&ndash;  background-color: #fff;&ndash;&gt;-->
+<!--&lt;!&ndash;  border-bottom: 1px solid #d4d4d4;&ndash;&gt;-->
+<!--&lt;!&ndash;}&ndash;&gt;-->
+
+<!--&lt;!&ndash;/*when hovering an item:*/&ndash;&gt;-->
+<!--&lt;!&ndash;.autocomplete-items div:hover {&ndash;&gt;-->
+<!--&lt;!&ndash;  background-color: #e9e9e9;&ndash;&gt;-->
+<!--&lt;!&ndash;}&ndash;&gt;-->
+
+<!--&lt;!&ndash;/*when navigating through the items using the arrow keys:*/&ndash;&gt;-->
+<!--.autocomplete-active {-->
+<!--  background-color: DodgerBlue !important;-->
+<!--  color: #ffffff;-->
+<!--}-->
+
+
+
+</style>
 <head>
     <meta charset="UTF-8"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 </head>
 
 <body>
@@ -20,8 +95,14 @@
             <li class="nav-item">
                 <a class="nav-link text-white" href="/create">Create Message</a>
             </li>
+            <!--            <li class="nav-item">-->
+            <!--                <a class="nav-link text-white" href="/newTopic">Create Topic</a>-->
+            <!--            </li>-->
         </ul>
     </div>
+    <form data-th-action="@{/logout}" method="POST">
+        <input type="submit" value="Logout"/>
+    </form>
 </nav>
 
 <p></p>
@@ -34,36 +115,206 @@
             <h3>Új üzenet</h3>
         </div>
         <div class="card-body">
-            <span data-sec-authentication="name"></span>
             <form data-th-action="@{/create}" method="POST" data-th-object="${message}">
-                <!--                <table>-->
-                <!--                <tr>-->
-                <!--                    <td>Author:</td>-->
-                <!--                    <td><label>-->
-                <!--                        <input type="text" id="author" name="author" value="author" data-th-field="*{author}"/>-->
-                <!--                    </label></td>-->
-                <!--&lt;!&ndash;                    <td data-th-if="${#fields.hasError('author')}" data-th-errors="*{author}">Author Error</td>&ndash;&gt;-->
-                <!--                </tr>-->
-                <!--                </table>-->
-                <div class="form-group">
-                    <textarea data-th-field="*{text}" type="text" id="message" name="message" class="form-control"
-                              rows="10"
-                              data-th-classappend="${#fields.hasErrors('text')} ? is-invalid : ''" required></textarea>
-                    <div class="invalid-feedback" data-th-if="${#fields.hasErrors('text')}" data-th-errors="*{text}">
-                        Text error
+                <textarea data-th-field="*{text}"
+                          id="myInput"
+                          name="message"
+                          class="form-control"
+                          rows="10"
+                          autocomplete="off"
+                          data-th-classappend="${#fields.hasErrors('text')} ? is-invalid : ''"
+                          required>
+                </textarea>
+                <script>
+      $('#myInput').summernote({
+        tabsize: 2,
+        height: 260,
+        toolbar: [
+          ['style'],
+          ['font', ['bold', 'underline', 'clear']],
+          ['color', ['color']],
+          ['para', ['ul', 'ol', 'paragraph']],
+          ['table', ['table']],
+          ['insert', ['link', 'picture', 'video']]]
+      });
+
+
+
+                </script>
+                <script>
+function autocomplete(inp, arr) {
+  /*the autocomplete function takes two arguments,
+  the text field element and an array of possible autocompleted values:*/
+  var currentFocus;
+  /*execute a function when someone writes in the text field:*/
+  inp.addEventListener("input", function(e) {
+      var a, b, i, val = this.value;
+      /*close any already open lists of autocompleted values*/
+      closeAllLists();
+      if (!val) { return false;}
+      currentFocus = -1;
+      /*create a DIV element that will contain the items (values):*/
+      a = document.createElement("DIV");
+      a.setAttribute("id", this.id + "autocomplete-list");
+      a.setAttribute("class", "autocomplete-items");
+      /*append the DIV element as a child of the autocomplete container:*/
+      this.parentNode.appendChild(a);
+      /*for each item in the array...*/
+      for (i = 0; i < arr.length; i++) {
+        /*check if the item starts with the same letters as the text field value:*/
+        if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+          /*create a DIV element for each matching element:*/
+          b = document.createElement("DIV");
+          /*make the matching letters bold:*/
+          b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+          b.innerHTML += arr[i].substr(val.length);
+          /*insert a input field that will hold the current array item's value:*/
+          b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+          /*execute a function when someone clicks on the item value (DIV element):*/
+          b.addEventListener("click", function(e) {
+              /*insert the value for the autocomplete text field:*/
+              inp.value = this.getElementsByTagName("input")[0].value;
+              /*close the list of autocompleted values,
+              (or any other open lists of autocompleted values:*/
+              closeAllLists();
+          });
+          a.appendChild(b);
+        }
+      }
+  });
+  /*execute a function presses a key on the keyboard:*/
+  inp.addEventListener("keydown", function(e) {
+      var x = document.getElementById(this.id + "autocomplete-list");
+      if (x) x = x.getElementsByTagName("div");
+      if (e.keyCode == 40) {
+        /*If the arrow DOWN key is pressed,
+        increase the currentFocus variable:*/
+        currentFocus++;
+        /*and and make the current item more visible:*/
+        addActive(x);
+      } else if (e.keyCode == 38) { //up
+        /*If the arrow UP key is pressed,
+        decrease the currentFocus variable:*/
+        currentFocus--;
+        /*and and make the current item more visible:*/
+        addActive(x);
+      } else if (e.keyCode == 13) {
+        /*If the ENTER key is pressed, prevent the form from being submitted,*/
+        e.preventDefault();
+        if (currentFocus > -1) {
+          /*and simulate a click on the "active" item:*/
+          if (x) x[currentFocus].click();
+        }
+      }
+  });
+  function addActive(x) {
+    /*a function to classify an item as "active":*/
+    if (!x) return false;
+    /*start by removing the "active" class on all items:*/
+    removeActive(x);
+    if (currentFocus >= x.length) currentFocus = 0;
+    if (currentFocus < 0) currentFocus = (x.length - 1);
+    /*add class "autocomplete-active":*/
+    x[currentFocus].classList.add("autocomplete-active");
+  }
+  function removeActive(x) {
+    /*a function to remove the "active" class from all autocomplete items:*/
+    for (var i = 0; i < x.length; i++) {
+      x[i].classList.remove("autocomplete-active");
+    }
+  }
+  function closeAllLists(elmnt) {
+    /*close all autocomplete lists in the document,
+    except the one passed as an argument:*/
+    var x = document.getElementsByClassName("autocomplete-items");
+    for (var i = 0; i < x.length; i++) {
+      if (elmnt != x[i] && elmnt != inp) {
+        x[i].parentNode.removeChild(x[i]);
+      }
+    }
+  }
+  /*execute a function when someone clicks in the document:*/
+  document.addEventListener("click", function (e) {
+      closeAllLists(e.target);
+  });
+}
+
+/*An array containing all the country names in the world:*/
+var countries = ["Afghanistan","Albania","Algeria","Andorra","Angola","Anguilla","Antigua & Barbuda","Argentina","Armenia","Aruba","Australia","Austria","Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados","Belarus","Belgium","Belize","Benin","Bermuda","Bhutan","Bolivia","Bosnia & Herzegovina","Botswana","Brazil","British Virgin Islands","Brunei","Bulgaria","Burkina Faso","Burundi","Cambodia","Cameroon","Canada","Cape Verde","Cayman Islands","Central Arfrican Republic","Chad","Chile","China","Colombia","Congo","Cook Islands","Costa Rica","Cote D Ivoire","Croatia","Cuba","Curacao","Cyprus","Czech Republic","Denmark","Djibouti","Dominica","Dominican Republic","Ecuador","Egypt","El Salvador","Equatorial Guinea","Eritrea","Estonia","Ethiopia","Falkland Islands","Faroe Islands","Fiji","Finland","France","French Polynesia","French West Indies","Gabon","Gambia","Georgia","Germany","Ghana","Gibraltar","Greece","Greenland","Grenada","Guam","Guatemala","Guernsey","Guinea","Guinea Bissau","Guyana","Haiti","Honduras","Hong Kong","Hungary","Iceland","India","Indonesia","Iran","Iraq","Ireland","Isle of Man","Israel","Italy","Jamaica","Japan","Jersey","Jordan","Kazakhstan","Kenya","Kiribati","Kosovo","Kuwait","Kyrgyzstan","Laos","Latvia","Lebanon","Lesotho","Liberia","Libya","Liechtenstein","Lithuania","Luxembourg","Macau","Macedonia","Madagascar","Malawi","Malaysia","Maldives","Mali","Malta","Marshall Islands","Mauritania","Mauritius","Mexico","Micronesia","Moldova","Monaco","Mongolia","Montenegro","Montserrat","Morocco","Mozambique","Myanmar","Namibia","Nauro","Nepal","Netherlands","Netherlands Antilles","New Caledonia","New Zealand","Nicaragua","Niger","Nigeria","North Korea","Norway","Oman","Pakistan","Palau","Palestine","Panama","Papua New Guinea","Paraguay","Peru","Philippines","Poland","Portugal","Puerto Rico","Qatar","Reunion","Romania","Russia","Rwanda","Saint Pierre & Miquelon","Samoa","San Marino","Sao Tome and Principe","Saudi Arabia","Senegal","Serbia","Seychelles","Sierra Leone","Singapore","Slovakia","Slovenia","Solomon Islands","Somalia","South Africa","South Korea","South Sudan","Spain","Sri Lanka","St Kitts & Nevis","St Lucia","St Vincent","Sudan","Suriname","Swaziland","Sweden","Switzerland","Syria","Taiwan","Tajikistan","Tanzania","Thailand","Timor L'Este","Togo","Tonga","Trinidad & Tobago","Tunisia","Turkey","Turkmenistan","Turks & Caicos","Tuvalu","Uganda","Ukraine","United Arab Emirates","United Kingdom","United States of America","Uruguay","Uzbekistan","Vanuatu","Vatican City","Venezuela","Vietnam","Virgin Islands (US)","Yemen","Zambia","Zimbabwe"];
+
+/*initiate the autocomplete function on the "myInput" element, and pass along the countries array as possible autocomplete values:*/
+autocomplete(document.getElementById("myInput"), countries);
+
+
+
+                </script>
+
+                <div class="invalid-feedback" data-th-if="${#fields.hasErrors('text')}" data-th-errors="*{text}">
+                    Text error
+                </div>
+
+
+                <p></p>
+                <div class="form-check-inline col-sm-0 " align="right">Select Topic:
+                    <select data-th-field="*{messageTopic.topicName}">
+                        <option data-th-each="topic : ${topics}"
+                                data-th-value="${topic.topicName}"
+                                data-th-text="${topic.topicName}">
+                        </option>
+                    </select>
+                </div>
+
+                <p></p>
+                    <div class="form-check-inline col-sm-0 " align="left">
+                        <a data-th-href="@{/newTopic}" class="btn btn-info" role="button"
+                           data-toggle="modal" data-target="#exampleModal">New topic</a>
                     </div>
 
+                <div class="col-sm-0 " align="right">
+                    <button type="submit" class=" btn btn-primary ">Küldés</button>
                 </div>
-                <select data-th-field="*{messageTopic.topicName}">
-                    <option data-th-each="topic : ${topics}"
-                            data-th-value="${topic.topicName}"
-                            data-th-text="${topic.topicName}">Select Topic
-                    </option>
-                </select>
-                <button type="submit" class="btn btn-primary">Küld</button>
+
+
             </form>
+
+
+            </div>
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                 aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Create New topic</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form data-th-action="@{/newTopic}" method="POST" data-th-object="${topic}">
+                            <div class="modal-body">
+                                <p></p>
+                                <div class="container">
+
+                                    <p></p>
+
+                                    <input data-th-field="*{topicName}" class="form-control form-control-sm-6"
+                                           placeholder="Enter a new topic name">
+
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">Create</button>
+
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
+
 </body>
 </html>

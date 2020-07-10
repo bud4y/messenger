@@ -26,16 +26,16 @@ public class TopicController {
         return "listOfTopics";
     }
 
-    @GetMapping("/newTopic")
-    public String getCreateTopic(Model model) {
-        model.addAttribute("topic", new Topic());
-        return "newTopic";
-    }
+//    @GetMapping("/newTopic")
+//    public String getCreateTopic(Model model) {
+//        model.addAttribute("topic", new Topic());
+//        return "newTopic";
+//    }
 
     @PostMapping("/newTopic")
     public String createTopic(@ModelAttribute Topic topic) {
         topicService.creatingTopic(topic);
-        return "redirect:/messages";
+        return "redirect:/create";
     }
 
 

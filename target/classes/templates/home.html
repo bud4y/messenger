@@ -1,11 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <html>
     <head>
         <meta charset="UTF-8"/>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
@@ -26,16 +21,20 @@
             <li class="nav-item">
                 <a class="nav-link text-white" href="/create">Create Message</a>
             </li>
+<!--            <li class="nav-item">-->
+<!--                <a class="nav-link text-white" href="/newTopic">Create Topic</a>-->
+<!--            </li>-->
         </ul>
     </div>
     <form data-th-action="@{/logout}" method="POST">
         <input type="submit" value="Logout"/>
     </form>
 </nav>
+
 <p></p>
 <div class="container">
-    <h2>Üdv újra itt!</h2>
-    <div data-th-text="${valami}"></div>
+    <h2>Üdv újra itt <span data-th-text="${#authentication.getPrincipal().getUsername().toUpperCase()}"></span>!</h2>
+<!--    <h3><span data-th-text="${#authentication.getPrincipal().authorities}"></span></h3>-->
 </div>
 </body>
 </html>

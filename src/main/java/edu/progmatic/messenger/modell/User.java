@@ -5,9 +5,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.management.relation.Role;
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Set;
@@ -19,19 +17,17 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @NotBlank
-    private String username;
-    @NotBlank
+    private String userName;
     private String password;
-
     private String email;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthDate;
-    @ManyToMany
+
+    @ManyToMany(fetch = FetchType.LAZY)
     private Set<Authority> authorities;
 
     public User(RegDto regDto) {
-        this.username = regDto.getUsername();
+        this.userName = regDto.getUsername();
         this.password = regDto.getPassword();
         this.email = regDto.getEmail();
         this.birthDate = regDto.getBirthday();
@@ -51,44 +47,44 @@ public class User implements UserDetails {
     }
 
     public String getUsername() {
-        return username;
+        return userName;
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return authorities;
     }
 
     public void setAuthorities(Set<Authority> authorities) {
         this.authorities = authorities;
     }
 
-    public void addAuthority(Authority authority){
+    public void addAuthority(Authority authority) {
         authorities.add(authority);
     }
 
@@ -114,8 +110,5 @@ public class User implements UserDetails {
 
     public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
-    }
-
-    public void setAuthorities(Collection<? extends GrantedAuthority> authorities) {
     }
 }

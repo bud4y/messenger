@@ -4,57 +4,52 @@ import edu.progmatic.messenger.modell.User;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.List;
 
 @Entity
-@Table(name = "Authotity")
 public class Authority implements GrantedAuthority {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long authorityId;
+    private Long id;
 
-    @Column(name = "authoritiyName")
-    private String authorityName;
+   // private String name;
+    private String authority;
+    @ManyToMany(mappedBy = "authorities")
+    private List<User> users;
 
-    @ManyToMany
-    private Set<User> userDataSet;
-
-    public Authority(Long authorityId, String authorityName, Set<User> userDataSet) {
-        this.authorityId = authorityId;
-        this.authorityName = authorityName;
-        this.userDataSet = userDataSet;
+    public Authority(String authority) {
+        this.authority = authority;
     }
 
-    public Authority() {
-    }
-
-    public Long getAuthorityId() {
-        return authorityId;
-    }
-
-    public void setAuthorityId(Long authorityId) {
-        this.authorityId = authorityId;
-    }
-
-    public String getAuthorityName() {
-        return authorityName;
-    }
-
-    public void setAuthorityName(String authorityName) {
-        this.authorityName = authorityName;
-    }
-
-    public Set<User> getUserDataSet() {
-        return userDataSet;
-    }
-
-    public void setUserDataSet(Set<User> userDataSet) {
-        this.userDataSet = userDataSet;
-    }
+    public Authority(){}
 
     @Override
     public String getAuthority() {
-        return null;
+        return authority;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setAuthority(String authority) {
+        this.authority = authority;
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
+
+    public void addUser(User user){
+        users.add(user);
     }
 }

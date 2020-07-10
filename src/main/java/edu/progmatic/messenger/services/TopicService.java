@@ -1,6 +1,7 @@
 package edu.progmatic.messenger.services;
 
 import edu.progmatic.messenger.modell.Topic;
+import edu.progmatic.messenger.modell.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import javax.persistence.EntityManager;

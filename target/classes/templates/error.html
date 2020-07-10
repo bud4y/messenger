@@ -13,27 +13,39 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
             integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
             crossorigin="anonymous"></script>
+    <style type="text/css">
+        body{
+            background-size: cover;
+            background-image:url('https://www.boostability.com/wp-content/uploads/2012/10/BOOST_BLOG_IMAGE_RB_SET_10_404_PAGE_1200x628px_v1_3.jpg');
+        }
+
+    </style>
 </head>
 
-<body style="background-image: url('https://memegenerator.net/img/instances/84762822/oops-youve-have-an-error-page.jpg'); background-attachment: fixed; background-size: 100% 100%; background-repeat: no-repeat;">
+<!--<body style="background-image: url('https://www.boostability.com/wp-content/uploads/2012/10/BOOST_BLOG_IMAGE_RB_SET_10_404_PAGE_1200x628px_v1_3.jpg'); background-attachment: fixed; background-size: 100% 100%; background-repeat: no-repeat;">-->
 
-<div>
+<!--<div class="container" align="center" data-th-if="${messageList.empty}">-->
 <!--    <h2>Oops you've have an error!</h2>-->
-</div>
+<!--</div>-->
+<body>
 <form data-th-action="@{/login}" method="POST">
     <input class="btn btn-primary" type="submit" value="back to login page"/>
 </form>
 
-    <div data-th-if="${exceptionMessage != null}">
-        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample"
-                aria-expanded="false" aria-controls="collapseExample">
-            Show exception
-        </button>
-        <div class="collapse" id="collapseExample">
-            <div class="card card-body" data-th-text="${exceptionMessage}">
-            </div>
+<div data-th-if="${exceptionMessage != null}">
+    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample"
+            aria-expanded="false" aria-controls="collapseExample">
+        Show exception
+    </button>
+    <div class="collapse" id="collapseExample">
+        <div class="card card-body" data-th-text="${exceptionMessage}">
+        </div>
+
+        <div class="card card-body">
+            <div data-th-text="${exceptionMessage}"></div>
         </div>
     </div>
+</div>
 </body>
 </html>
 

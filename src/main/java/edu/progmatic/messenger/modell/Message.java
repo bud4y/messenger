@@ -8,11 +8,16 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Setter
+@Getter
+@NoArgsConstructor
 @Entity
 @Table(name = "message")
 public class Message implements Serializable {
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -23,11 +28,12 @@ public class Message implements Serializable {
     public String author;
 
     @NotNull
-    @Size(min = 10, max = 200)
+    //@Size(min = 10, max = 200)
     public String text;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     public LocalDateTime dateTime;
+
     boolean isDeleted;
 
 
@@ -43,8 +49,6 @@ public class Message implements Serializable {
         this.messageTopic = messageTopic;
     }
 
-    public Message() {
-    }
 
     public boolean isDeleted() {
         return isDeleted;

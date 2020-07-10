@@ -1,12 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <html>
-    <head>
         <meta charset="UTF-8"/>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -26,19 +20,29 @@
             <li class="nav-item">
                 <a class="nav-link text-white" href="/create">Create Message</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link text-white" href="/newTopic">Create Topic</a>
+            </li>
         </ul>
     </div>
     <form data-th-action="@{/logout}" method="POST">
         <input type="submit" value="Logout"/>
     </form>
 </nav>
+
 <p></p>
+<h1>Create new topic</h1>
 <form data-th-action="@{/newTopic}" method="POST" data-th-object="${topic}">
-    <div class="form-group">
-        <label >Topic name:</label>
-        <input data-th-field="*{topicName}" class="form-control" placeholder="Enter topic">
+    <p></p>
+    <div style="top-margin-5" class="form-group row">
+<!--        <label  class="col-sm-1 col-form-label col-form-label-sm">Topic name: </label>-->
+        <div class="col-sm-2">
+            <input data-th-field="*{topicName}" class="form-control form-control-sm-2" placeholder="Enter a new topic name">
+        </div>
+
+
+    <button type="submit" class="btn btn-primary">Create</button>
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 
 </body>

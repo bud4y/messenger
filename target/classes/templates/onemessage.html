@@ -1,9 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <html>
     <head>
         <meta charset="UTF-8"/>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
@@ -24,6 +20,9 @@
             <li class="nav-item">
                 <a class="nav-link text-white" href="/create">Create Message</a>
             </li>
+<!--            <li class="nav-item">-->
+<!--                <a class="nav-link text-white" href="/newTopic">Create Topic</a>-->
+<!--            </li>-->
         </ul>
     </div>
     <form data-th-action="@{/logout}" method="POST">
@@ -35,10 +34,10 @@
 <div class="container">
     <div class="card">
         <div class="card-body">
-<!--            <p class="card-text" data-th-text="${message.id}"></p>-->
+            <!--            <p class="card-text" data-th-text="${message.id}"></p>-->
             <h4 class="card-title" data-th-text="${message.author}"></h4>
             <p class="card-text" data-th-text="${message.text}"></p>
-<p class="card-text" data-th-text="${message.dateTime}"></p>
+            <p class="card-text" data-th-text="${message.dateTime}"></p>
         </div>
     </div>
 </div>
