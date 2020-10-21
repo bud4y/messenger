@@ -70,8 +70,6 @@ p.ex2 {
 <!--  color: #ffffff;-->
 <!--}-->
 
-
-
 </style>
 <head>
     <meta charset="UTF-8"/>
@@ -138,9 +136,8 @@ p.ex2 {
           ['insert', ['link', 'picture', 'video']]]
       });
 
-
-
                 </script>
+
                 <script>
 function autocomplete(inp, arr) {
   /*the autocomplete function takes two arguments,
@@ -247,6 +244,7 @@ autocomplete(document.getElementById("myInput"), countries);
 
 
 
+
                 </script>
 
                 <div class="invalid-feedback" data-th-if="${#fields.hasErrors('text')}" data-th-errors="*{text}">
@@ -265,10 +263,10 @@ autocomplete(document.getElementById("myInput"), countries);
                 </div>
 
                 <p></p>
-                    <div class="form-check-inline col-sm-0 " align="left">
-                        <a data-th-href="@{/newTopic}" class="btn btn-info" role="button"
-                           data-toggle="modal" data-target="#exampleModal">New topic</a>
-                    </div>
+                <div class="form-check-inline col-sm-0 " align="left">
+                    <a data-th-href="@{/newTopic}" class="btn btn-info" role="button"
+                       data-toggle="modal" data-target="#exampleModal">New topic</a>
+                </div>
 
                 <div class="col-sm-0 " align="right">
                     <button type="submit" class=" btn btn-primary ">Küldés</button>
@@ -278,43 +276,41 @@ autocomplete(document.getElementById("myInput"), countries);
             </form>
 
 
-            </div>
-            <!-- Modal -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
-                 aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Create New topic</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <form data-th-action="@{/newTopic}" method="POST" data-th-object="${topic}">
-                            <div class="modal-body">
-                                <p></p>
-                                <div class="container">
-
-                                    <p></p>
-
-                                    <input data-th-field="*{topicName}" class="form-control form-control-sm-6"
-                                           placeholder="Enter a new topic name">
-
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary">Create</button>
-
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            </div>
-                        </form>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+             aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Create New topic</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
+                    <form data-th-action="@{/newTopic}" method="POST" data-th-object="${topic}">
+                        <div class="modal-body">
+                            <p></p>
+                            <div class="container">
+
+                                <p></p>
+
+                                <input data-th-field="*{topicName}" class="form-control form-control-sm-6"
+                                       placeholder="Enter a new topic name">
+
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Create</button>
+
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 
 </body>
 </html>

@@ -24,7 +24,8 @@ public class WebSecConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/login")
                 .and()
                 .authorizeRequests()
-                .antMatchers("/register", "/login", "/css/*", "/js/*", "/images/*", "/favicon.ico").permitAll()
+                .antMatchers("/register", "/login", "/css/*", "/js/*", "/images/*", "/favicon.ico")
+                .permitAll()
                 .anyRequest().authenticated();
     }
 

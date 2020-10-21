@@ -1,20 +1,13 @@
 package edu.progmatic.messenger.modell;
 
 import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Setter
-@Getter
-@NoArgsConstructor
 @Entity
 @Table(name = "message")
 public class Message implements Serializable {
@@ -40,6 +33,8 @@ public class Message implements Serializable {
     @ManyToOne
     private Topic messageTopic;
 
+    public Message(){
+    }
 
     public Message(String text, String author, LocalDateTime dateTime, boolean isDeleted, Topic messageTopic) {
         this.text = text;
